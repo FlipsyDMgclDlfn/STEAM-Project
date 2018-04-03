@@ -98,12 +98,16 @@ def getRectLeft(poly,start,end,step,width):
   for i in my_range(start,end+end/width,end/width):
     xs += [i]
     ys += [poly.evaluate(i)]
+    
+  yStep = ((max(ys)-min(ys))/width)
+  
+  adjust = 0-(min(ys)/yStep)
   cords = []
   funcRange = end - start
   xStep = funcRange / width
   rectWidth = step / xStep
-  for i in my_range(0,width,rectWidth):
-    cords += [([round(xs[i]),round(ys[i])],[round(xs[i+rectWidth]),round(ys[i+rectWidth])])]
+  for i in my_range(0,width-rectWidth,rectWidth):
+    cords += [([0,round(ys[round(i)]/yStep+adjust)],[round(xs[round(i+rectWidth)]/xStep),round(ys[round(i+rectWidth)]/yStep+adjust)])]
   return cords
   
 poly = Polynomial({0:-1,2:1}) ##Polynomial working with
@@ -111,7 +115,7 @@ width = 400                   ##Width of the graph (also the height)
 start = 0                     ##Starting bounds
 end = 2                       ##Ending bounds
 step = .5                     ##Width of rectangles
-print(getRectLeft(poly,start,end,step,width))
+print(getRectLeft(poly,start,end,step,width)) 
 
 
   
