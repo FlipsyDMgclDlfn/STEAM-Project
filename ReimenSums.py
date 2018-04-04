@@ -1,3 +1,4 @@
+from tkinter import *
 class Polynomial(object):
   
   ##the code runs this automatically when initializing a polynomial
@@ -78,7 +79,7 @@ def my_range(start, end, step):
 def getCords(poly,start,end,width):
   xs = []
   ys = []
-  for i in my_range(start,end+end/width,end/width):
+  for i in my_range(start,end+end/width,1*end/width):
     xs += [i]
     ys += [poly.evaluate(i)]
     
@@ -89,7 +90,7 @@ def getCords(poly,start,end,width):
   
   cords = []
   for i in range(0,len(xs)):
-    cords += [[round(xs[i]/xStep),round(ys[i]/yStep + adjust)]]
+    cords += [[round(xs[i]/xStep),400-round(ys[i]/yStep + adjust)]]
   return cords
 
 def getRectLeft(poly,start,end,step,width):
@@ -109,13 +110,39 @@ def getRectLeft(poly,start,end,step,width):
   for i in my_range(0,width-rectWidth,rectWidth):
     cords += [([0,round(ys[round(i)]/yStep+adjust)],[round(xs[round(i+rectWidth)]/xStep),round(ys[round(i+rectWidth)]/yStep+adjust)])]
   return cords
+
+class RiemannSums:
+  def __init__(self):
+    self.poly = Polynomial({0:-1,1:1})  ##Polynomial working with
+    self.width = 400                   ##Width of the graph (also the height)
+    self.start = 0                     ##Starting bounds
+    self.end = 2                       ##Ending bounds
+    self.step = .5                     ##Width of rectangles
+    self.update()
+  def update(self):
+    self.xs = []
+    self.ys = []
+    for i in my_range(self.start,self.end+self.end/self.width,1*self.end/self.width):
+      self.xs += [i]
+      self.ys += [self.poly.evaluate(i)]
+    
+    self.xStep = ((max(self.xs)-min(self.xs))/self.width)
+    self.yStep = ((max(self.ys)-min(self.ys))/self.width)
   
-poly = Polynomial({0:-1,2:1}) ##Polynomial working with
-width = 400                   ##Width of the graph (also the height)
-start = 0                     ##Starting bounds
-end = 2                       ##Ending bounds
-step = .5                     ##Width of rectangles
-print(getRectLeft(poly,start,end,step,width)) 
+    adjust = 0-(min(self.ys)/self.yStep)
+    
+    C = Canvas(master, bg = "white", height = 800, width = 1000)
+    lines = []
+    cords = getCords(self.poly,self.start,self.end,self.width)
+    for i in range(0,len(cords)-1):
+      print(cords[i][0],cords[i][1])
+      lines += [C.create_line(cords[i][0],cords[i][1],cords[i+1][0],cords[i+1][1],fill="red")]
+      C.pack()
+    C.create_line(0,400-adjust,400,400-adjust)
+
+master = Tk()
+sums = RiemannSums()
+master.mainloop()
 
 
   
