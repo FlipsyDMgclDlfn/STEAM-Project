@@ -113,14 +113,21 @@ def getRectRight(poly,start,end,step,width):
 
 class RiemannSums:
   def __init__(self):
-    self.poly = Polynomial({0:0,3:1,2:-2}) ##Polynomial working with
+    self.poly = Polynomial({0:0,7:3,1:-2}) ##Polynomial working with
     self.width = 400                   ##Width of the graph (also the height)
     self.start = 0                     ##Starting bounds
-    self.end = 4                       ##Ending bounds
-    self.step = .5                      ##Width of rectangles
-    self.right = True
+    self.end = 10                       ##Ending bounds
+    self.step = .1                      ##Width of rectangles
+    self.C = Canvas(master, bg = "white", height = 600, width = 500)
+    self.update()
+    B = Scale(master,from_=0.01,to=1,command=self.updateSlider,orient=HORIZONTAL,resolution=.01)
+    B.set(.5)
+    B.pack()
+  def updateSlider(self,step):
+    self.step = float(step)
     self.update()
   def update(self):
+    self.C.delete(ALL)
     self.xs = []
     self.ys = []
     for i in my_range(self.start,self.end+self.end/self.width,1*self.end/self.width):
@@ -132,29 +139,28 @@ class RiemannSums:
   
     adjusty = 0-(min(self.ys)/self.yStep)
     
-    C = Canvas(master, bg = "white", height = 600, width = 500)
-    
     lines = []
     cords = getCords(self.poly,self.start,self.end,self.width)
     for i in range(0,len(cords)-1):
-      lines += [C.create_line(50+cords[i][0],50+cords[i][1],50+cords[i+1][0],50+cords[i+1][1],fill="red")]
-      C.pack()
+      lines += [self.C.create_line(50+cords[i][0],50+cords[i][1],50+cords[i+1][0],50+cords[i+1][1],fill="red")]
+      self.C.pack()
     
-    if self.right:
-      rectCords = getRectRight(self.poly,self.start,self.end,self.step,self.width)
-      print(rectCords)
-      for i in range(0,len(rectCords)):
-        C.create_rectangle(50+rectCords[i][0][0],450 - adjusty-rectCords[i][0][1],50+rectCords[i][1][0],450-rectCords[i][1][1],outline = "blue")
-    C.create_text(250,500,text = "y = " + self.poly.__str__())
-    C.create_line(50,450-adjusty,450,450-adjusty)
-    C.create_rectangle(50,50,450,450,outline="green")
+    rectCords = getRectRight(self.poly,self.start,self.end,self.step,self.width)
+    for i in range(0,len(rectCords)):
+      self.C.create_rectangle(50+rectCords[i][0][0],450 - adjusty-rectCords[i][0][1],50+rectCords[i][1][0],450-rectCords[i][1][1],outline = "blue")
+
+    self.C.create_text(250,500,text = "y = " + self.poly.__str__())
+    self.C.create_line(50,450-adjusty,450,450-adjusty)
+    self.C.create_rectangle(50,50,450,450,outline="green")
     
-    C.create_text(25,55,text=str(round(max(self.ys),2)))
-    C.create_text(25,450,text=str(round(min(self.ys),2)))
-    C.create_text(50,460,text=str(round(min(self.xs),2)))
-    C.create_text(450,460,text=str(round(min(self.ys),2)))
-    C.create_text(45,450-adjusty,text="0")
-    C.pack()
+    self.C.create_text(25,55,text=str(round(max(self.ys),1)))
+    self.C.create_text(25,450,text=str(round(min(self.ys),1)))
+    self.C.create_text(50,460,text=str(self.start))
+    self.C.create_text(450,460,text=str(self.end))
+    self.C.create_text(45,450-adjusty,text="0")
+
+    self.C.pack()
+    
 
 master = Tk()
 sums = RiemannSums()
