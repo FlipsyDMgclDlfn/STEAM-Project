@@ -129,7 +129,7 @@ class RiemannSums:
     self.xStep = ((max(self.xs)-min(self.xs))/self.width)
     self.yStep = ((max(self.ys)-min(self.ys))/self.width)
   
-    adjust = 0-(min(self.ys)/self.yStep)
+    adjusty = 0-(min(self.ys)/self.yStep)
     
     C = Canvas(master, bg = "white", height = 800, width = 1000)
     lines = []
@@ -138,7 +138,7 @@ class RiemannSums:
       print(cords[i][0],cords[i][1])
       lines += [C.create_line(cords[i][0],cords[i][1],cords[i+1][0],cords[i+1][1],fill="red")]
       C.pack()
-    C.create_line(0,400-adjust,400,400-adjust)
+    C.create_line(0,400-adjusty,400,400-adjusty)
 
 master = Tk()
 sums = RiemannSums()
