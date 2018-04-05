@@ -114,10 +114,10 @@ def getRectRight(poly,start,end,step,width):
 
 class RiemannSums:
   def __init__(self):
-    self.poly = Polynomial({0:0,3:1,2:-1})   ##Polynomial working with
+    self.poly = Polynomial({0:-1,3:2,2:-2})   ##Polynomial working with
     self.width = 400                    ##Width of the graph (also the height)
     self.start = 0                      ##Starting bounds
-    self.end = 2                        ##Ending bounds
+    self.end = 5                        ##Ending bounds
     self.step = .1                      ##Width of rectangles
     self.C = Canvas(master, bg = "white", height = 600, width = 500)
     self.update()
