@@ -1,4 +1,5 @@
 from tkinter import *
+from tkinter import font
 class Polynomial(object):
   
   ##the code runs this automatically when initializing a polynomial
@@ -113,10 +114,10 @@ def getRectRight(poly,start,end,step,width):
 
 class RiemannSums:
   def __init__(self):
-    self.poly = Polynomial({0:0,7:3,1:-2}) ##Polynomial working with
-    self.width = 400                   ##Width of the graph (also the height)
-    self.start = 0                     ##Starting bounds
-    self.end = 10                       ##Ending bounds
+    self.poly = Polynomial({0:0,3:1,2:-1})   ##Polynomial working with
+    self.width = 400                    ##Width of the graph (also the height)
+    self.start = 0                      ##Starting bounds
+    self.end = 2                        ##Ending bounds
     self.step = .1                      ##Width of rectangles
     self.C = Canvas(master, bg = "white", height = 600, width = 500)
     self.update()
@@ -158,7 +159,10 @@ class RiemannSums:
     self.C.create_text(50,460,text=str(self.start))
     self.C.create_text(450,460,text=str(self.end))
     self.C.create_text(45,450-adjusty,text="0")
-
+    self.C.create_text(250,550,text=u"\u222B" + " " + self.poly.__str__() + " dx " + u"\u2248" + " " + str(round(calculateRight(self.start,self.end,self.step,self.poly),2)))
+    ##self.C.create_text(215,540,text=str(self.start),font=("Courier", 8))
+    ##self.C.create_text(215,560,text=str(self.end),font=("Courier", 8))
+    
     self.C.pack()
     
 
