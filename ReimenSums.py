@@ -114,7 +114,7 @@ def getRectRight(poly,start,end,step,width):
 
 class RiemannSums:
   def __init__(self):
-    self.poly = Polynomial({0:-1,3:2,2:-2})   ##Polynomial working with
+    self.poly = Polynomial({0:0,3:1,2:-1})   ##Polynomial working with
     self.width = 400                    ##Width of the graph (also the height)
     self.start = 0                      ##Starting bounds
     self.end = 5                        ##Ending bounds
@@ -124,8 +124,14 @@ class RiemannSums:
     B = Scale(master,from_=0.01,to=1,command=self.updateSlider,orient=HORIZONTAL,resolution=.01)
     B.set(.5)
     B.pack()
+    C = Scale(master,from_=1,to=10,command=self.updateSlider2,orient=HORIZONTAL,resolution=1)
+    C.set(2)
+    C.pack()
   def updateSlider(self,step):
     self.step = float(step)
+    self.update()
+  def updateSlider2(self,end):
+    self.end = int(end)
     self.update()
   def update(self):
     self.C.delete(ALL)
