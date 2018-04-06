@@ -157,7 +157,7 @@ class RiemannSums:
     EB.insert(0,0)
     EC = Entry(master,width=3)
     EC.grid(row=3,column=6)
-    EC.insert(0,2)
+    EC.insert(0,1)
     ED = Entry(master,width=3)
     ED.grid(row=3,column=8)
     ED.insert(0,0)
