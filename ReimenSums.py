@@ -7,6 +7,8 @@ def evaluateFunc(x,func):
   for i in range(0,len(func)):
     if func[i] == "x":
       final += str(x)
+    elif func[i] == "^":
+      final += "**"
     else:
       final += func[i]
   return eval(final)
@@ -66,7 +68,7 @@ def getRectRight(func,start,end,step,width):
 
 class RiemannSums:
   def __init__(self):
-    self.func = "x**2"
+    self.func = "x^2"
     self.width = 400                    ##Width of the graph (also the height)
     self.start = 0                      ##Starting bounds
     self.end = 5                        ##Ending bounds
@@ -81,9 +83,13 @@ class RiemannSums:
     S2.grid(row=1,column=2,columnspan=1)
     EF = Entry(master,width=12)
     EF.grid(row=3,column=1)
-    EF.insert(0,"x**2")
+    EF.insert(0,"x^2")
     B = Button(master,text="update",command=lambda:self.updateButton(EF.get()))
     B.grid(row=4,column=1)
+    L1 = Label(master,text="Rectangle Width")
+    L1.grid(row=3,column = 0)
+    L2 = Label(master,text="Max X Value")
+    L2.grid(row=3,column=2)
   def updateSlider(self,step):
     self.step = float(step)
     self.update()
@@ -124,6 +130,8 @@ class RiemannSums:
       self.C.create_line(50,450-adjusty,450,450-adjusty)
       self.C.create_text(45,450-adjusty,text="0")
     self.C.create_rectangle(50,50,450,450,outline="green")
+
+    self.C.create_text(250,25,text="Riemann Sums",font=("Courier", 20))
     
     self.C.create_text(25,55,text=str(round(max(self.ys),1)))
     self.C.create_text(25,450,text=str(round(min(self.ys),1)))
@@ -131,6 +139,7 @@ class RiemannSums:
     self.C.create_text(450,460,text=str(self.end))
     
     self.C.create_text(250,550,text=u"\u222B" + " " + self.func + " dx " + u"\u2248" + " " + str(round(calculateRight(self.start,self.end,self.step,self.func),2)))
+    self.C.create_text(250,575,text="Aproximated Area")
     ##self.C.create_text(215,540,text=str(self.start),font=("Courier", 8))
     ##self.C.create_text(215,560,text=str(self.end),font=("Courier", 8))
     
