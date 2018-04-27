@@ -121,12 +121,12 @@ class RiemannSums:
     rectCords = getRectRight(self.func,self.start,self.end,self.step,self.width)
     for i in range(0,len(rectCords)):
       if adjusty < 0:
-        self.C.create_rectangle(50+rectCords[i][0][0],450,50+rectCords[i][1][0],450-rectCords[i][1][1],outline = "blue")        
+        self.C.create_rectangle(50+rectCords[i][0][0],450,50+rectCords[i][1][0],450-rectCords[i][1][1],outline = "teal")        
       elif adjusty >= 400:
-        self.C.create_rectangle(50+rectCords[i][0][0],50,50+rectCords[i][1][0],450-rectCords[i][1][1],outline = "blue")
+        self.C.create_rectangle(50+rectCords[i][0][0],50,50+rectCords[i][1][0],450-rectCords[i][1][1],outline = "teal")
       else:
 
-        self.C.create_rectangle(50+rectCords[i][0][0],450 - adjusty-rectCords[i][0][1],50+rectCords[i][1][0],450-rectCords[i][1][1],outline = "blue")
+        self.C.create_rectangle(50+rectCords[i][0][0],450 - adjusty-rectCords[i][0][1],50+rectCords[i][1][0],450-rectCords[i][1][1],outline = "teal")
 
     self.C.create_text(250,500,text = "y = " + self.func)
     if adjusty >= 0 and adjusty <= 400:
